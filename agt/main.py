@@ -5,6 +5,7 @@ import agt.version
 
 @click.group
 def main_cli() -> None:
+    """AWS Glacier Tools CLI"""
     pass
 
 main_cli.add_command(agt.version.version)
