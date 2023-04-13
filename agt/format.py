@@ -1,8 +1,11 @@
+from typing import Iterable
 import tabulate, json
 
-def format_vaults_table(response: dict, exclude:list[str]|None=None, fmt:str = 'simple') -> str:
+def format_table(response: list[dict], exclude:list[str]|None=None, fmt:str = 'simple') -> str:
     """Format vaults in human readable table format"""
-    if len(response) > 0:
+    if isinstance(response, dict):
+        response = [response]
+    if response:
         headers = list(response[0].keys())
         if exclude:
             for header in exclude:
@@ -18,7 +21,37 @@ def format_vaults_table(response: dict, exclude:list[str]|None=None, fmt:str = '
     else:
         return 'nothing found'
     
-def format_vaults_json(response: dict, exclude:list[str]|None=None) -> str:
+def format_list_item(response: dict, exclude:list[str]|None=None, fmt:str = 'simple') -> str:
+    """Format vaults in list format"""
+    if response:
+        if exclude:
+            for header in exclude:
+                del response[header]
+
+        data = []
+        for key, value in response.items():
+            data.append([key, value])
+        return tabulate.tabulate(data, tablefmt=fmt)
+    else:
+        return 'nothing found'
+    
+def format_list(response: dict|Iterable[dict], exclude:list[str]|None=None, fmt:str = 'simple') -> str:
+    """Format vaults in list format"""
+    items = []
+    if isinstance(response, dict) and len(response) > 0:
+        items = [response]
+    else:
+        items = tuple(response)
+    if items:
+        out = ''
+        for item in items:
+            if out: out += '\n'
+            out += format_list_item(item, exclude, fmt)
+        return out
+    else:
+        return 'nothing found'    
+
+def format_json(response: dict, exclude:list[str]|None=None) -> str:
     """Format vaults in tabbed json format"""
     if exclude:
         for vault in response:
