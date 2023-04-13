@@ -1,0 +1,6 @@
+{
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyPath": "${virtualenv}/bin/mypy",
+    "python.linting.enabled": true
+}
