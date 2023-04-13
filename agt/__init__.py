@@ -1,5 +1,5 @@
 import importlib.metadata
-import boto3
+import boto3    # type: ignore
 
 __version__ = importlib.metadata.version('agt')
 
