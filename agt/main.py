@@ -5,7 +5,8 @@ from agt import (
     version,
     vaults,
     jobs,
-)
+    archive,
+    )
 
 
 #read AccessKey and SecretKey from environment variables
@@ -22,6 +23,7 @@ def main_cli() -> None:
 main_cli.add_command(version.version)
 main_cli.add_command(vaults.vaults_grp)
 main_cli.add_command(jobs.jobs_grp)
+main_cli.add_command(archive.archive_grp)
 
 if __name__ == '__main__':
 
