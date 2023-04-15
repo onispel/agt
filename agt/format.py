@@ -14,7 +14,7 @@ def format_table(response: list[dict], exclude:list[str]|None=None, fmt:str = 's
     for vault in response:
         row = []
         for header in headers:
-            row.append(vault[header])
+            row.append(vault.get(header, ''))
         data.append(row)
     if data:
         return tabulate.tabulate(data, headers=headers, tablefmt=fmt)
