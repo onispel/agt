@@ -1,6 +1,5 @@
 import click
 
-import agt
 from agt import (
     version,
     vaults,
@@ -8,10 +7,6 @@ from agt import (
     archive,
     )
 
-
-#read AccessKey and SecretKey from environment variables
-# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
 
 @click.group
