@@ -1,9 +1,10 @@
 import click
 
 from agt import client
+from agt.format import format_json
 
 def list_jobs(vault_name: str) -> dict:
-    """List all jobs"""
+    """List all jobs of vault"""
     response = client.list_jobs(vaultName=vault_name)['JobList']
     return response
 
@@ -24,17 +25,31 @@ def initiate_job_inventory_retrieval(vault_name: str, job_type: str = 'inventory
     )
     return response
 
+def get_job_output(vault_name: str, job_id: str) -> dict:
+    """Get job output"""
+    response = client.get_job_output(vaultName=vault_name, jobId=job_id)
+    return response
+
 @click.group(name='jobs')
 def jobs_grp() -> None:
     """Jobs"""
     pass
+
+@jobs_grp.command(name='output')
+@click.argument('vault_name', required=True)
+@click.argument('job_id', required=True)
+def get_job_output_cli(vault_name: str, job_id: str) -> None:
+    """Get job output"""
+    response = get_job_output(vault_name, job_id)
+    body = response['body'].read()
+    click.echo(body)
 
 @jobs_grp.command(name='list')
 @click.argument('vault_name', required=True)
 def list_jobs_cli(vault_name: str) -> None:
     """List all jobs"""
     response = list_jobs(vault_name)
-    click.echo(response)
+    click.echo(format_json(response))
 
 @jobs_grp.command(name='retrieve')
 @click.argument('vault_name', required=True)
