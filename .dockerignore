@@ -1,0 +1,10 @@
+.git*
+output*
+poetry*
+*.csv
+.gitignore
+.env
+.*_cache
+.vscode
+dist
+.venv
