@@ -11,10 +11,13 @@ def format_table(response: list[dict], exclude:list[str]|None=None, fmt:str = 's
             for header in exclude:
                 headers.remove(header)
     data = []
-    for vault in response:
+    for data_set in response:
         row = []
         for header in headers:
-            row.append(vault.get(header, ''))
+            row_item = (data_set.get(header, ''))
+            if isinstance(row_item, Iterable):
+                row_item = "..."
+            row.append(row_item)
         data.append(row)
     if data:
         return tabulate.tabulate(data, headers=headers, tablefmt=fmt)
